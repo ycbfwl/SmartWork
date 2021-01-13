@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+<info>
+  <config>
+    <AssemblyPath>..\Debug\</AssemblyPath>
+  </config>
+  
+
+  
+    <program>
+      <Name>Test</Name>
+      <ID>p01</ID>
+      <DESC>Test Desc</DESC>
+      <AssemblyPath>SmartWork.UI.dll</AssemblyPath>
+      <ClassName>SmartWork.UI.frmTest</ClassName>
+    </program>
+
+    <program>
+      <Name>Test2</Name>
+      <ID>p02</ID>
+      <DESC>Test2 Desc</DESC>
+      <AssemblyPath>SmartWork.UI.dll</AssemblyPath>
+      <ClassName>SmartWork.UI.frmTest2</ClassName>
+    </program>
+
+
+  
+  
+</info>
+
