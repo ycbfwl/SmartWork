@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartWork.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,13 @@ namespace SmartWork.UI
         public frmTest()
         {
             InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SocketHelper soh = new SocketHelper("127.0.0.1",8888);
+
+            this.richTextBox1.Text += soh.Send("123");
         }
     }
 }
