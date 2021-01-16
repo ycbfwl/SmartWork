@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAlipayChecker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAlipayChecker.Designer.cs">
+      <DependentUpon>frmAlipayChecker.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAlipayChecker.resx">
+      <DependentUpon>frmAlipayChecker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTest.resx">
       <DependentUpon>frmTest.cs</DependentUpon>
     </EmbeddedResource>

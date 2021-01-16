@@ -4,12 +4,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
 <!-- 映射文件 -->
 <mapper namespace="SPACE_SAMPLE">
-<select id="SELECT_SAMPLE" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+<select id="SELECT_SAMPLE" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
 	SELECT * FROM ALIPAY_RECORD WHERE PAY_TO = #{id}
 </select>
 
 
-<select id="SELECT_SAMPLE2" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+<select id="SELECT_SAMPLE2" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
 select * from person where personname=#{id}          
 </select>
 

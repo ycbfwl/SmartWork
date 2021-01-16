@@ -28,6 +28,7 @@
         <mapper resource="Biz/Sample.xml"/>
         <mapper resource="Biz/AlipayRecord.xml"/>
         <mapper resource="Biz/AlipayMail.xml"/>
+        <mapper resource="Biz/bizAlipayChecker.xml"/>
     </mappers>
      
 </configuration>

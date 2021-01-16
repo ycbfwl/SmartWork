@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- 映射文件 -->
+<mapper namespace="ALIPAY_CHECKER">
+	<select id="ALIPAYMAIL.SELECT_DETAIL_MONTH" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
+		select
+		    TRIM(X.event_id) event_id,
+		    NVL(A.ISCHECKED,'False') ISCHECKED,
+		    to_char(to_date(TRIM(create_tm), 'yyyy-mm-dd hh24:mi:ss'), 'yyyymmdd') DT,
+		   -- TRIM(order_no) order_no,
+		    TRIM(create_tm) create_tm,
+		   -- TRIM(pay_tm) pay_tm,
+		   -- TRIM(update_tm) update_tm,
+		   -- TRIM(source_way) source_way,
+		    TRIM(pay_type) pay_type,
+		    TRIM(pay_to) pay_to,
+		    TRIM(goods_name) goods_name,
+		    TO_NUMBER(TRIM(cost)) cost,
+		    TRIM(in_out) in_out,
+		    TRIM(pay_status) pay_status,
+		  --  TRIM(server_cost) server_cost,
+		    TRIM(reject) reject,
+		    TRIM(remark) remark,
+		 --   TRIM(money_status) money_status,
+		--    TRIM(check_status) check_status,
+		    TRIM(owner) owner
+		from
+		    ALIPAY_RECORD X,
+		    ALIPAY_CHECKED A 
+		where
+		    to_char(to_date(TRIM(create_tm), 'YYYY-mm-dd hh24:mi:ss'), 'yyyymm') = SUBSTR(#{ARG_DT},1,6)
+		    and owner = #{ARG_OWNER}
+		    AND X.event_id = A.event_id(+)
+		    ORDER BY create_tm
+
+	</select>
+
+
+	<select id="SELECT_SAMPLE2" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
+		select * from person where personname=#{id}
+	</select>
+	
+	<select id="GET_OWNERS" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
+		select distinct
+		    owner
+		from
+		    ALIPAY_RECORD
+	</select>
+	
+	<insert id="ALIPAYMAIL.INS_CHECKED_STATUS" parameterType="java.util.HashMap">
+		merge
+		into
+		    ALIPAY_CHECKED M using (
+		        select
+		            #{ARG_EVENTID} EVENT_ID,
+		            #{ARG_ISCHECKED} ISCHECKED,
+		            sysdate UPDATETIME
+		        from
+		            DUAL
+		    ) N on (M.EVENT_ID = N.EVENT_ID)
+		    when MATCHED then
+		        update
+		        set
+		            M.ISCHECKED = N.ISCHECKED ,
+		            M.UPDATETIME = N.UPDATETIME
+		    when not MATCHED  then
+		    insert
+		        (M.EVENT_ID, M.ISCHECKED, M.UPDATETIME)
+		    values
+		        (
+		            N.EVENT_ID,
+		            N.ISCHECKED,
+		            N.UPDATETIME
+		        )
+	</insert>
+
+
+</mapper>

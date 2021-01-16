@@ -49,7 +49,7 @@ namespace SmartWork.Common
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             clientSocket.Connect(ip, port);
             clientSocket.Send(encode.GetBytes(data));
-            result = Receive(clientSocket, 5000 * 2); //5*2 seconds timeout.
+            result = Receive(clientSocket, 1000 * 60); // seconds timeout.
             DestroySocket(clientSocket);
             return result;
         }

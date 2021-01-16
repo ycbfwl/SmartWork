@@ -19,7 +19,7 @@ namespace SmartWork.Common
 
         public void addArg(String key, Object arg)
         {
-            this.htArgs.Add(key, arg);
+            this.htArgs.Add(key, arg.ToString());
         }
 
         public ExecHelper()
@@ -40,14 +40,22 @@ namespace SmartWork.Common
             return ds;
         }
 
-        public DataSet Update(String header)
+        public int Update(String header)
         {
+            int res = 0;
             SocketHelper soh = new SocketHelper(serverHost, serverPort);
             ExecServer dbh = new ExecServer(header, htArgs);
             string obj = JsonConvert.SerializeObject(dbh);
             String rcv = soh.Send(obj);
-            DataSet ds = (DataSet)JsonConvert.DeserializeObject(rcv, typeof(DataSet));
-            return ds;
+            try
+            {
+                res = int.Parse(rcv);
+            }
+            catch
+            {
+                res = 0;
+            }
+            return res;
         }
 
     }

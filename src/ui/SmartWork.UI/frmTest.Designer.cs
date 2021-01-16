@@ -30,13 +30,13 @@
         {
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button2
@@ -58,15 +58,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1004, 329);
             this.panel1.TabIndex = 2;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.button2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1004, 100);
-            this.panel2.TabIndex = 2;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel3
             // 
@@ -76,6 +68,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1004, 229);
             this.panel3.TabIndex = 3;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // dataGridView1
             // 
@@ -86,6 +79,17 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1004, 229);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.button2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1004, 100);
+            this.panel2.TabIndex = 2;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // frmTest
             // 
@@ -96,9 +100,9 @@
             this.Name = "frmTest";
             this.Text = "frmTest";
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

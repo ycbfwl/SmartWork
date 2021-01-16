@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import java.util.LinkedHashMap;
+import java.util.regex.Pattern;
+
 import com.google.gson.Gson;
 
 @SuppressWarnings("rawtypes")
@@ -35,7 +37,17 @@ public class ExecServer {
 		
 		Gson gson = new Gson();
 		
-		 returnBackMsg = gson.toJson(setMethod.invoke(cls.newInstance(),args), LinkedHashMap.class) ;
+		Object retBacObj = setMethod.invoke(cls.newInstance(),args);
+		boolean isMatch = Pattern.matches("^[1-9]\\d*|0$", retBacObj.toString());
+		
+		if(isMatch)
+		{
+			returnBackMsg = retBacObj.toString();
+		}else
+		{
+			returnBackMsg = gson.toJson(setMethod.invoke(cls.newInstance(),args), LinkedHashMap.class) ;
+		}
+		 
 		
 		
 		} catch (ClassNotFoundException e) {

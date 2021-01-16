@@ -17,11 +17,11 @@
     </program>
 
     <program>
-      <Name>Test2</Name>
+      <Name>月账确认</Name>
       <ID>p02</ID>
-      <DESC>Test2 Desc</DESC>
+      <DESC>月账确认</DESC>
       <AssemblyPath>SmartWork.UI.dll</AssemblyPath>
-      <ClassName>SmartWork.UI.frmTest2</ClassName>
+      <ClassName>SmartWork.UI.frmAlipayChecker</ClassName>
     </program>
 
 

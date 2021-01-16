@@ -34,6 +34,9 @@ namespace Launcher
             if (F_Logon.ShowDialog() == DialogResult.OK)
             {
                 GetMenu(tvMain, dtPrograms);
+            }else
+            {
+                System.Environment.Exit(0);
             }
 
 
