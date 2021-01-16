@@ -22,26 +22,14 @@ namespace SmartWork.UI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SocketHelper soh = new SocketHelper("127.0.0.1",8888);
+            ExecHelper execHelper = new ExecHelper();
 
+            execHelper.addArg("ARG_ABC", "TEST");
 
+           DataSet ds =  execHelper.Select("SmartWork.Biz.Sample#main");
 
-            Hashtable hs = new Hashtable();
-            hs.Add("arg1", "love");
-            String par = "SmartWork.Biz.Quartz.Sample#main";
+            dataGridView1.DataSource = ds.Tables[0].Copy();
 
-            ExecServer dbh = new ExecServer(par, hs);
-
-
-
-
-            string obj = JsonConvert.SerializeObject(dbh);
-            //发送信息向服务器端
-            String rcv = soh.Send(obj);
-
-           
-
-            this.richTextBox1.Text += rcv;
         }
     }
 }

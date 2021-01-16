@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import SmartWork.Biz.MyScheduler;
+
 public class JavaServer {
   private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy hh:mm:ss.SS");
   
@@ -57,6 +59,8 @@ public class JavaServer {
   
   public static void serviceStart(String[] args) {
     trace("Service start function invoked...");
+    MyScheduler  scheduler = new MyScheduler();
+    scheduler.schedulerRunning();
     SocketMain.start(args);
   }
   

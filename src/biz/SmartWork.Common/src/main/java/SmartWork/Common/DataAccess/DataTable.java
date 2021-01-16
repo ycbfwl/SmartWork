@@ -1,9 +1,9 @@
 package SmartWork.Common.DataAccess;
 
-import java.util.ArrayList;
+import java.util.List;
 
+public abstract  class DataTable implements List<Object>  {
 
-@SuppressWarnings("serial")
-public abstract class DataTable extends ArrayList<DataRow> {
+	
 
 }

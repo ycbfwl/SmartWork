@@ -2,22 +2,22 @@ package SmartWork.ServerLauncher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.HashMap;
 
+import java.util.LinkedHashMap;
 import com.google.gson.Gson;
 
 @SuppressWarnings("rawtypes")
 public class ExecServer {
-	public Hashtable para;
-	public String Header;
+	public HashMap args;
+	public String header;
 	
 	 public	ExecServer(String serverIn)
 		{
 		 Gson gson = new Gson();
 		 ExecServer dbh = gson.fromJson(serverIn, ExecServer.class);
-		 this.Header = dbh.Header;
-		 this.para  = dbh.para;
+		 this.header = dbh.header;
+		 this.args  = dbh.args;
 		}
 	 
 	 @SuppressWarnings("unchecked")
@@ -25,17 +25,17 @@ public class ExecServer {
 	 {
 		 String returnBackMsg = "";
 		 try {
-		 String[] splits = Header.split("#");
+		 String[] splits = header.split("#");
 		 String className = splits[0];
 		 String methodName = splits[1];
 		 
 		 Class cls = Class.forName(className);
 		
-		Method setMethod = cls.getDeclaredMethod(methodName,Hashtable.class); 
+		Method setMethod = cls.getDeclaredMethod(methodName,HashMap.class); 
 		
 		Gson gson = new Gson();
 		
-		 returnBackMsg = gson.toJson(setMethod.invoke(cls.newInstance(),para), List.class) ;
+		 returnBackMsg = gson.toJson(setMethod.invoke(cls.newInstance(),args), LinkedHashMap.class) ;
 		
 		
 		} catch (ClassNotFoundException e) {

@@ -14,14 +14,13 @@ namespace SmartWork.Common
             this.ip = ip;
             this.port = port;
         }
-        private static Encoding encode = Encoding.Default;
+        private static Encoding encode = Encoding.UTF8;
         private String ip = "127.0.0.1";
         private int port = 8888;
 
         /// <summary>
         /// 监听请求
         /// </summary>
-        /// <param name="port"></param>
         public  void Listen()
         {
             Socket listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -50,11 +49,8 @@ namespace SmartWork.Common
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             clientSocket.Connect(ip, port);
             clientSocket.Send(encode.GetBytes(data));
-            //Console.WriteLine("Send：" + data);
             result = Receive(clientSocket, 5000 * 2); //5*2 seconds timeout.
-            //Console.WriteLine("Receive：" + result);
             DestroySocket(clientSocket);
-            //Console.ReadLine();
             return result;
         }
         /// <summary>
@@ -103,15 +99,6 @@ namespace SmartWork.Common
             }
             socket.Close();
         }
-
-        //public void Main(string[] args)
-        //{
-        //    //运行服务器监听数据
-        //    //SocketTest.Listen(8888);
-
-        //    //发送和接收TCP数据：
-        //    Send(this.ip, this.port, "TCP TEST.");
-        //}
 
     }
 }

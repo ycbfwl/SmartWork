@@ -9,14 +9,10 @@ import org.apache.ibatis.session.SqlSessionFactory;
 public class DBHelper {
 	public static SqlSessionFactory sessionFactory;
 
-	
-
 	@SuppressWarnings("unchecked")
 	public static List<Object> getList(String targetSQL ,  HashMap<String, Object> htArgs) throws Exception {
 
-
 		SqlSession session = MybatisUtil.getSession();
-		
 		List<Object> res = session.selectList(targetSQL,htArgs);
 		session.close();
 		return res;

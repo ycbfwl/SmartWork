@@ -1,8 +1,14 @@
 package SmartWork.Common.DataAccess;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
-@SuppressWarnings("serial")
-public class DataSet extends ArrayList<DataTable>{
+public  class DataSet  extends LinkedHashMap<String,Object>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6006397767316717024L;
+
+
 
 }

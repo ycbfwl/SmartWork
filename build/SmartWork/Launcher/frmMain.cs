@@ -73,17 +73,15 @@ namespace Launcher
 
             frm.TopLevel = false;
             TabPage tabPage = new TabPage();
-            tabPage.Size = new Size(912, 402);
-            tabPage.Text = frm.Name;
+            tabPage.Text = fi.name;
             tabPage.UseVisualStyleBackColor = true;
-            tabPage.Controls.Add(frm);
             this.tabMain.Controls.Add(tabPage);
-            frm.Dock = DockStyle.Fill;
             frm.FormBorderStyle = FormBorderStyle.None;
             frm.WindowState = FormWindowState.Maximized;
             frm.TopMost = false;
             frm.Show();
-
+            frm.Dock = DockStyle.Fill;
+            tabPage.Controls.Add(frm);
             this.tabMain.SelectedTab = tabPage;
 
         }

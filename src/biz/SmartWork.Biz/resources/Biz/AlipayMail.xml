@@ -6,7 +6,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <mapper namespace="SPACE_ALIPAY_MAIL">
 
 
-	<select id="ALIPAYMAIL.SELECT_RECEIVER" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	<select id="ALIPAYMAIL.SELECT_RECEIVER" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
 	<![CDATA[
 		select
 		    email
@@ -18,7 +18,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<select id="ALIPAYMAIL.SELECT_USERS" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	<select id="ALIPAYMAIL.SELECT_USERS" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
 	<![CDATA[
 		select
 		    user_id
@@ -27,7 +27,133 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    ]]>
 	</select>
 	
-	<select id="SELECT_COST_LIST_MM" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	<select id="ALIPAYMAIL.SAMPLE" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
+	<![CDATA[
+
+		        select
+		            --OUT_TB.event_id,
+		            --IN_TB.event_id,
+		            --out_tb.order_no,
+		            --IN_tb.order_no,
+		            out_tb.create_tm,
+		            --out_tb.source_way,
+		            out_tb.pay_to,
+		            out_tb.pay_type,
+		            out_tb.goods_name,
+		            out_tb.cost + IN_tb.cost cost,
+		            out_tb.in_out,
+		            out_tb.pay_status,
+		            out_tb.remark,
+		            out_tb.money_status,
+		            out_tb.check_status,
+		            out_tb.owner
+		        from
+		            (
+		                select
+		                    event_id,
+		                    order_no,
+		                    to_date(create_tm, 'yyyy/mm/dd hh24:mi:ss') create_tm,
+		                    source_way,
+		                    pay_to,
+		                    goods_name,
+		                    nvl(case
+		                        when cost = '' then 0
+		                        else cost
+		                    end, 0) cost,
+		                    in_out,
+		                    pay_status
+		                from
+		                    (
+		                        select
+		                            TRIM(event_id) event_id,
+		                            TRIM(order_no) order_no,
+		                            TRIM(create_tm) create_tm,
+		                            TRIM(pay_tm) pay_tm,
+		                            TRIM(update_tm) update_tm,
+		                            TRIM(source_way) source_way,
+		                            TRIM(pay_type) pay_type,
+		                            TRIM(pay_to) pay_to,
+		                            TRIM(goods_name) goods_name,
+		                            TO_NUMBER(TRIM(cost)) cost,
+		                            TRIM(in_out) in_out,
+		                            TRIM(pay_status) pay_status,
+		                            TRIM(server_cost) server_cost,
+		                            TRIM(reject) reject,
+		                            TRIM(remark) remark,
+		                            TRIM(money_status) money_status,
+		                            TRIM(check_status) check_status,
+		                            TRIM(owner) owner
+		                        from
+		                            ALIPAY_RECORD
+		                    )
+		                where
+		                    PAY_STATUS <> '交易关闭'
+		                    --and to_char(to_date(create_tm, 'yyyy/mm/dd hh24:mi'), 'YYYYMMDD') between '20201001' and '20201031'
+		                    and IN_OUT is not null
+		                    and IN_OUT in ('收入')
+		                    and PAY_TO || GOODS_NAME <> 'should love转账'
+		                    --and SUBSTR(order_no, 1, 2) <> '" '
+		            ) in_tb,
+		            (
+		                select
+		                    event_id,
+		                    order_no,
+		                    to_date(create_tm, 'yyyy/mm/dd hh24:mi:ss') create_tm,
+		                    source_way,
+		                    pay_to,
+		                    pay_type,
+		                    goods_name,
+		                    cost * (-1) cost,
+		                    in_out,
+		                    pay_status,
+		                    remark,
+		                    money_status,
+		                    check_status,
+		                    owner
+		                from
+		                    (
+		                        select
+		                            TRIM(event_id) event_id,
+		                            TRIM(order_no) order_no,
+		                            TRIM(create_tm) create_tm,
+		                            TRIM(pay_tm) pay_tm,
+		                            TRIM(update_tm) update_tm,
+		                            TRIM(source_way) source_way,
+		                            TRIM(pay_type) pay_type,
+		                            TRIM(pay_to) pay_to,
+		                            TRIM(goods_name) goods_name,
+		                            TO_NUMBER(TRIM(cost)) cost,
+		                            TRIM(in_out) in_out,
+		                            TRIM(pay_status) pay_status,
+		                            TRIM(server_cost) server_cost,
+		                            TRIM(reject) reject,
+		                            TRIM(remark) remark,
+		                            TRIM(money_status) money_status,
+		                            TRIM(check_status) check_status,
+		                            TRIM(owner) owner
+		                        from
+		                            ALIPAY_RECORD
+		                    )
+		                where
+		                    PAY_STATUS <> '交易关闭'
+		                    --and to_char(to_date(create_tm, 'yyyy/mm/dd hh24:mi:ss'), 'YYYYMMDD') between '20201001' and '20201031'
+		                    and IN_OUT is not null
+		                    and IN_OUT in ('支出')
+		                    and pay_to || GOODS_NAME || IN_OUT <> '浙江网商银行股份有限公司网商银行转账支出'
+		                    --and SUBSTR(order_no, 1, 2) <> '" '
+		            ) OUT_tb
+		        where
+		            OUT_tb.order_no = in_tb.order_no(+)
+		            and OUT_TB.PAY_TO = IN_TB.PAY_TO(+)
+		            
+		            and to_char(out_tb.create_tm,'yyyymm') between to_char(ADD_MONTHS( SYSDATE ,-1),'yyyymm') AND to_char(SYSDATE,'yyyymm')
+		            
+         			
+
+		    ]]>
+	</select>
+	
+	<select id="SELECT_COST_LIST_MM" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
 	<![CDATA[
 select
 		    to_char(create_tm, 'YYYYMM') MM,
@@ -167,7 +293,7 @@ select
 		    ]]>
 	</select>
 
-	<select id="SELECT_COST_LIST" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	<select id="SELECT_COST_LIST" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
 	<![CDATA[
 			select
 			    --OUT_TB.EVENT_ID,

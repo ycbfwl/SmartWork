@@ -33,7 +33,6 @@
             this.plUIBase = new System.Windows.Forms.Panel();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.plMainTreeView = new System.Windows.Forms.Panel();
             this.tvMain = new System.Windows.Forms.TreeView();
             this.plMain = new System.Windows.Forms.Panel();
@@ -49,7 +48,7 @@
             this.plMainTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.plMainTop.Location = new System.Drawing.Point(0, 0);
             this.plMainTop.Name = "plMainTop";
-            this.plMainTop.Size = new System.Drawing.Size(1105, 51);
+            this.plMainTop.Size = new System.Drawing.Size(834, 51);
             this.plMainTop.TabIndex = 0;
             // 
             // plMainBody
@@ -59,7 +58,7 @@
             this.plMainBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.plMainBody.Location = new System.Drawing.Point(0, 51);
             this.plMainBody.Name = "plMainBody";
-            this.plMainBody.Size = new System.Drawing.Size(1105, 482);
+            this.plMainBody.Size = new System.Drawing.Size(834, 482);
             this.plMainBody.TabIndex = 1;
             // 
             // plUIBase
@@ -68,18 +67,17 @@
             this.plUIBase.Dock = System.Windows.Forms.DockStyle.Fill;
             this.plUIBase.Location = new System.Drawing.Point(203, 0);
             this.plUIBase.Name = "plUIBase";
-            this.plUIBase.Size = new System.Drawing.Size(902, 482);
+            this.plUIBase.Size = new System.Drawing.Size(631, 482);
             this.plUIBase.TabIndex = 1;
             // 
             // tabMain
             // 
             this.tabMain.Controls.Add(this.tabPage1);
-            this.tabMain.Controls.Add(this.tabPage2);
             this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabMain.Location = new System.Drawing.Point(0, 0);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(902, 482);
+            this.tabMain.Size = new System.Drawing.Size(631, 482);
             this.tabMain.TabIndex = 0;
             // 
             // tabPage1
@@ -87,20 +85,10 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(894, 456);
+            this.tabPage1.Size = new System.Drawing.Size(623, 456);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Home";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(894, 406);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // plMainTreeView
             // 
@@ -127,14 +115,14 @@
             this.plMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.plMain.Location = new System.Drawing.Point(0, 0);
             this.plMain.Name = "plMain";
-            this.plMain.Size = new System.Drawing.Size(1105, 533);
+            this.plMain.Size = new System.Drawing.Size(834, 533);
             this.plMain.TabIndex = 0;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1105, 533);
+            this.ClientSize = new System.Drawing.Size(834, 533);
             this.Controls.Add(this.plMain);
             this.Name = "frmMain";
             this.Text = "SmartWork";
@@ -157,7 +145,6 @@
         private System.Windows.Forms.TreeView tvMain;
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel plMain;
     }
 }
