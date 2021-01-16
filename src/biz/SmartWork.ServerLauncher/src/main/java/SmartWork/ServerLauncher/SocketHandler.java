@@ -3,6 +3,7 @@ package SmartWork.ServerLauncher;
 import java.net.InetAddress;
 import java.util.Date;
 
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -53,13 +54,18 @@ public class SocketHandler extends SimpleChannelInboundHandler<Object>{
             int readableBytes = in.readableBytes();
             byte[] bytes =new byte[readableBytes];
             in.readBytes(bytes);
-            System.out.println(new String(bytes));
+            
+            String strSocketIn =  new String(bytes);
+            System.out.println(strSocketIn);
+            System.out.println("服务端接受的消息 : " + msg);
+            ExecServer execServer = new ExecServer(strSocketIn);
+            		
             //System.out.print(in.toString(CharsetUtil.UTF_8));
 
-            System.out.println("服务端接受的消息 : " + msg);
+           
             
           //返回给客户端的数据，告诉我已经读到你的数据了
-            String result = "eyudhee\r\n";
+            String result = execServer.exec();
             ByteBuf buf = Unpooled.buffer();
             buf.writeBytes(result.getBytes());
             ctx.channel().writeAndFlush(buf);
