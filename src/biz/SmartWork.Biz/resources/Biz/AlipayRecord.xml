@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- 映射文件 -->
+<mapper namespace="SPACE_ALIPAY_RECORD">
+
+
+	<select id="SELECT_SAMPLE211" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		select * from person where personname=#{ARG_id}
+	</select>
+
+	<insert id="INS_RECORD" parameterType="java.util.HashMap">
+		INSERT INTO
+		    ALIPAY_RECORD (
+		        EVENT_ID,
+		        ORDER_NO,
+		        CREATE_TM,
+		        PAY_TM,
+		        UPDATE_TM,
+		        SOURCE_WAY,
+		        PAY_TYPE,
+		        PAY_TO,
+		        GOODS_NAME,
+		        COST,
+		        IN_OUT,
+		        PAY_STATUS,
+		        SERVER_COST,
+		        REJECT,
+		        REMARK,
+		        MONEY_STATUS,
+		        CHECK_STATUS,
+		        OWNER
+		    )
+		VALUES
+		    (
+		    	#{ARG_EVENT_ID},
+		        #{ARG_ORDER_NO},
+		        #{ARG_CREATE_TM},
+		        #{ARG_PAY_TM},
+		        #{ARG_UPDATE_TM},
+		        #{ARG_SOURCE_WAY},
+		        #{ARG_PAY_TYPE},
+		        #{ARG_PAY_TO},
+		        #{ARG_GOODS_NAME},
+		        #{ARG_COST},
+		        #{ARG_IN_OUT},
+		        #{ARG_PAY_STATUS},
+		        #{ARG_SERVER_COST},
+		        #{ARG_REJECT},
+		        #{ARG_REMARK},
+		        #{ARG_MONEY_STATUS},
+		        #{ARG_CHECK_STATUS},
+		        #{ARG_OWNER}
+		    )
+	</insert>
+
+
+	<update id="MERGE_RECORD" parameterType="java.util.HashMap">
+		MERGE INTO ALIPAY_RECORD M 
+		USING 
+		(select 
+
+		        #{ARG_EVENT_ID} EVENT_ID,
+		        #{ARG_ORDER_NO} ORDER_NO,
+		        #{ARG_CREATE_TM} CREATE_TM,
+		        #{ARG_PAY_TM} PAY_TM,
+		        #{ARG_UPDATE_TM} UPDATE_TM,
+		        #{ARG_SOURCE_WAY} SOURCE_WAY,
+		        #{ARG_PAY_TYPE} PAY_TYPE,
+		        #{ARG_PAY_TO} PAY_TO,
+		        #{ARG_GOODS_NAME} GOODS_NAME,
+		        #{ARG_COST} COST ,
+		        #{ARG_IN_OUT} IN_OUT,
+		        #{ARG_PAY_STATUS} PAY_STATUS,
+		        #{ARG_SERVER_COST} SERVER_COST,
+		        #{ARG_REJECT}  REJECT,
+		        #{ARG_REMARK} REMARK,
+		        #{ARG_MONEY_STATUS} MONEY_STATUS,
+		        #{ARG_CHECK_STATUS} CHECK_STATUS,
+		        #{ARG_OWNER} OWNER
+		from 
+		DUAL 
+		) N 
+		ON (M.EVENT_ID=N.EVENT_ID)
+		WHEN MATCHED THEN
+		  UPDATE SET 
+		  
+		  	M.ORDER_NO = N.ORDER_NO,
+		        M.CREATE_TM = N.CREATE_TM,
+		        M.PAY_TM = N.PAY_TM,
+		        M.UPDATE_TM = N.UPDATE_TM,
+		        M.SOURCE_WAY = N.SOURCE_WAY,
+		        M.PAY_TYPE = N.PAY_TYPE,
+		        M.PAY_TO = N.PAY_TO,
+		        M.GOODS_NAME = N.GOODS_NAME,
+		        M.COST = N.COST,
+		        M.IN_OUT = N.IN_OUT,
+		        M.PAY_STATUS = N.PAY_STATUS,
+		        M.SERVER_COST = N.SERVER_COST,
+		        M.REJECT = N.REJECT,
+		        M.REMARK = N.REMARK,
+		        M.MONEY_STATUS = N.MONEY_STATUS,
+		        M.CHECK_STATUS = N.CHECK_STATUS,
+		        M.OWNER = N.OWNER
+		WHEN NOT MATCHED THEN
+		  INSERT(
+		  M.EVENT_ID,
+		  	M.ORDER_NO ,
+		        M.CREATE_TM ,
+		        M.PAY_TM ,
+		        M.UPDATE_TM ,
+		        M.SOURCE_WAY ,
+		        M.PAY_TYPE ,
+		        M.PAY_TO ,
+		        M.GOODS_NAME ,
+		        M.COST ,
+		        M.IN_OUT ,
+		        M.PAY_STATUS,
+		        M.SERVER_COST,
+		        M.REJECT ,
+		        M.REMARK ,
+		        M.MONEY_STATUS,
+		        M.CHECK_STATUS ,
+		        M.OWNER 
+		  ) 
+		  VALUES(
+		  N.EVENT_ID,
+		  		n.ORDER_NO ,
+		        N.CREATE_TM ,
+		        N.PAY_TM ,
+		        N.UPDATE_TM ,
+		        N.SOURCE_WAY ,
+		        N.PAY_TYPE ,
+		        N.PAY_TO ,
+		        N.GOODS_NAME ,
+		        N.COST ,
+		        N.IN_OUT ,
+		        N.PAY_STATUS,
+		        N.SERVER_COST,
+		       N.REJECT ,
+		        N.REMARK ,
+		        N.MONEY_STATUS,
+		        N.CHECK_STATUS ,
+		        N.OWNER 
+		  )
+	</update>
+
+</mapper>

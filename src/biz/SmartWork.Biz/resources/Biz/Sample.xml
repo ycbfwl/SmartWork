@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<!-- 映射文件 -->
+<mapper namespace="SPACE_SAMPLE">
+<select id="SELECT_SAMPLE" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT * FROM ALIPAY_RECORD WHERE PAY_TO = #{id}
+</select>
+
+
+<select id="SELECT_SAMPLE2" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+select * from person where personname=#{id}          
+</select>
+
+	<insert id="INS_SAMPLE"  parameterType="java.util.HashMap">
+	INSERT INTO TEMP_TB_1(VAR1, VAR2, VAR3) VALUES(#{ARG1},#{ARG2},#{ARG3}) 
+	</insert>
+
+
+</mapper>

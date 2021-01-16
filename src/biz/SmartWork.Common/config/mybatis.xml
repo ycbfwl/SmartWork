@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+   
+<configuration>
+
+
+     
+
+    <environments default="test">
+        <environment id="test">
+
+            <transactionManager type="JDBC">
+                 
+            </transactionManager>
+             
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.OracleDriver"></property>
+                <property name="url" value="jdbc:oracle:thin:@192.168.1.102:49161:xe"></property>
+                <property name="username" value="hannibal"></property>
+                <property name="password" value="123456"></property>
+            </dataSource>
+        </environment>
+    </environments>
+     
+    <mappers>
+        <mapper resource="Biz/Sample.xml"/>
+        <mapper resource="Biz/AlipayRecord.xml"/>
+        <mapper resource="Biz/AlipayMail.xml"/>
+    </mappers>
+     
+</configuration>
