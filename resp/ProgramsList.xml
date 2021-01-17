@@ -24,7 +24,13 @@
       <ClassName>SmartWork.UI.frmAlipayChecker</ClassName>
     </program>
 
-
+    <program>
+      <Name>月报</Name>
+      <ID>p03</ID>
+      <DESC>月报</DESC>
+      <AssemblyPath>SmartWork.UI.dll</AssemblyPath>
+      <ClassName>SmartWork.UI.frmAlipayCostRepot</ClassName>
+    </program>
   
   
 </info>

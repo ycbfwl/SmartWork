@@ -8,35 +8,127 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		select
 		    TRIM(X.event_id) event_id,
 		    NVL(A.ISCHECKED,'False') ISCHECKED,
-		    to_char(to_date(TRIM(create_tm), 'yyyy-mm-dd hh24:mi:ss'), 'yyyymmdd') DT,
+		    --to_char(to_date(TRIM(create_tm), 'yyyy-mm-dd hh24:mi:ss'), 'yyyymmdd') DT,
 		   -- TRIM(order_no) order_no,
 		    TRIM(create_tm) create_tm,
 		   -- TRIM(pay_tm) pay_tm,
 		   -- TRIM(update_tm) update_tm,
 		   -- TRIM(source_way) source_way,
-		    TRIM(pay_type) pay_type,
+		    --TRIM(pay_type) pay_type,
 		    TRIM(pay_to) pay_to,
 		    TRIM(goods_name) goods_name,
 		    TO_NUMBER(TRIM(cost)) cost,
 		    TRIM(in_out) in_out,
 		    TRIM(pay_status) pay_status,
 		  --  TRIM(server_cost) server_cost,
-		    TRIM(reject) reject,
-		    TRIM(remark) remark,
+		   -- TRIM(reject) reject,
+		    TRIM(remark) || B.REMARK_PLUS remark,
 		 --   TRIM(money_status) money_status,
 		--    TRIM(check_status) check_status,
-		    TRIM(owner) owner
+		    TRIM(owner) owner,
+		    nvl(C.TYPE1,' ') TYPE1,
+		    nvl(C.TYPE2,' ') TYPE2
 		from
 		    ALIPAY_RECORD X,
-		    ALIPAY_CHECKED A 
+		    ALIPAY_CHECKED A  ,
+		    ALIPAY_REMARK B  ,
+		    ALIPAY_COSTTYPE_RECORD C 
 		where
 		    to_char(to_date(TRIM(create_tm), 'YYYY-mm-dd hh24:mi:ss'), 'yyyymm') = SUBSTR(#{ARG_DT},1,6)
 		    and owner = #{ARG_OWNER}
 		    AND X.event_id = A.event_id(+)
+		    AND   X.event_id = B.event_id(+)
+		    AND   X.event_id = C.event_id(+)
 		    ORDER BY create_tm
 
 	</select>
+	
+	<sql id="SELECT_COST_BASE">
+		        select
+		            TRIM(X.event_id) event_id,
+		            --nvl(A.ISCHECKED, 'False') ISCHECKED,
+		            --to_char(to_date(TRIM(create_tm), 'yyyy-mm-dd hh24:mi:ss'), 'yyyymmdd') DT,
+		            -- TRIM(order_no) order_no,
+		            TRIM(create_tm) create_tm,
+		            -- TRIM(pay_tm) pay_tm,
+		            -- TRIM(update_tm) update_tm,
+		            -- TRIM(source_way) source_way,
+		            TRIM(pay_type) pay_type,
+		            TRIM(pay_to) pay_to,
+		            TRIM(goods_name) goods_name,
+		            TO_NUMBER(TRIM(cost)) cost,
+		            TRIM(in_out) in_out,
+		            TRIM(pay_status) pay_status,
+		            --  TRIM(server_cost) server_cost,
+		            --TRIM(reject) reject,
+		            TRIM(remark) || B.REMARK_PLUS remark,
+		            --   TRIM(money_status) money_status,
+		            --    TRIM(check_status) check_status,
+		            TRIM(owner) owner,
+		            C.TYPE1,
+		            C.TYPE2
+		        from
+		            ALIPAY_RECORD X,
+		            ALIPAY_CHECKED A,
+		            ALIPAY_REMARK B,
+		            ALIPAY_COSTTYPE_RECORD C
+		        where
+		            to_char(to_date(TRIM(create_tm), 'YYYY-mm-dd hh24:mi:ss'), 'yyyymm') = SUBSTR(#{ARG_DT},1,6)
+				    and owner = #{ARG_OWNER}
+				    AND X.event_id = A.event_id(+)
+		            and X.event_id = B.event_id(+)
+		            and X.event_id = C.event_id(+)
+		            and A.ISCHECKED = 'True'
+	</sql>
 
+	<select id="ALIPAYMAIL.SELECT_COST_REPORT" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
+		with
+		    base_tb as (
+			<include refid="SELECT_COST_BASE"/>
+		    )
+		
+		select
+		    TYPE1,
+		    TYPE2,
+		    sum_cost
+		from
+		    (
+		        select
+		            TYPE1,
+		            TYPE2,
+		            sum(cost) sum_cost
+		        from
+		            base_tb
+		        group by
+		            TYPE1,
+		            TYPE2
+		        union all
+		        select
+		            TYPE1,
+		            'TOTAL' TYPE2,
+		            sum(cost) sum_cost
+		        from
+		            base_tb
+		        group by
+		            TYPE1
+		        union all
+		        select
+		            'TOTAL' TYPE1,
+		            'TOTAL' TYPE2,
+		            sum(cost) sum_cost
+		        from
+		            base_tb
+		    )
+		order by
+		    TYPE1 desc,
+		    TYPE2 desc
+
+	</select>
+
+	<select id="ALIPAYMAIL.SELECT_COST_REPORT_DETAIL" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
+			<include refid="SELECT_COST_BASE"/>
+			 order by create_tm
+	</select>
 
 	<select id="SELECT_SAMPLE2" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
 		select * from person where personname=#{id}
@@ -48,7 +140,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		from
 		    ALIPAY_RECORD
 	</select>
-	
+	<select id="GET_TYPES" resultType="java.util.LinkedHashMap" parameterType="java.util.HashMap">
+		SELECT TYPE1  ,TYPE2 FROM ALIPAY_COSTTYPE
+	</select>
 	<insert id="ALIPAYMAIL.INS_CHECKED_STATUS" parameterType="java.util.HashMap">
 		merge
 		into
@@ -75,6 +169,62 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		            N.UPDATETIME
 		        )
 	</insert>
+	
+	<insert id="ALIPAYMAIL.INS_REMARK" parameterType="java.util.HashMap">
+		merge
+		into
+		    ALIPAY_REMARK M using (
+		        select
+		            #{ARG_EVENTID} EVENT_ID,
+		            #{ARG_REMARK} REMARK_PLUS,
+		            sysdate UPDATETIME
+		        from
+		            DUAL
+		    ) N on (M.EVENT_ID = N.EVENT_ID)
+		    when MATCHED then
+		        update
+		        set
+		            M.REMARK_PLUS = N.REMARK_PLUS ,
+		            M.UPDATETIME = N.UPDATETIME
+		    when not MATCHED  then
+		    insert
+		        (M.EVENT_ID, M.REMARK_PLUS, M.UPDATETIME)
+		    values
+		        (
+		            N.EVENT_ID,
+		            N.REMARK_PLUS,
+		            N.UPDATETIME
+		        )
+	</insert>
 
+	<insert id="ALIPAYMAIL.INS_COSTTYPE" parameterType="java.util.HashMap">
+		merge
+		into
+		    ALIPAY_COSTTYPE_RECORD M using (
+		        select
+		            #{ARG_EVENTID} EVENT_ID,
+		            #{ARG_TYPE1} TYPE1,
+		            #{ARG_TYPE2} TYPE2,
+		            sysdate UPDATETIME
+		        from
+		            DUAL
+		    ) N on (M.EVENT_ID = N.EVENT_ID)
+		    when MATCHED then
+		        update
+		        set
+		            M.TYPE1 = N.TYPE1 ,
+		            M.TYPE2 = N.TYPE2 ,
+		            M.UPDATETIME = N.UPDATETIME
+		    when not MATCHED  then
+		    insert
+		        (M.EVENT_ID, M.TYPE1, M.TYPE2, M.UPDATETIME)
+		    values
+		        (
+		            N.EVENT_ID,
+		            N.TYPE1,
+		            N.TYPE2,
+		            N.UPDATETIME
+		        )
+	</insert>
 
 </mapper>
