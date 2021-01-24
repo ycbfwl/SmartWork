@@ -39,6 +39,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\x86\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -59,6 +63,12 @@
     </Compile>
     <Compile Include="frmAlipayCostRepot.Designer.cs">
       <DependentUpon>frmAlipayCostRepot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRollCall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRollCall.Designer.cs">
+      <DependentUpon>frmRollCall.cs</DependentUpon>
     </Compile>
     <Compile Include="frmTest.cs">
       <SubType>Form</SubType>
@@ -82,6 +92,9 @@
     <EmbeddedResource Include="frmAlipayCostRepot.resx">
       <DependentUpon>frmAlipayCostRepot.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRollCall.resx">
+      <DependentUpon>frmRollCall.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTest.resx">
       <DependentUpon>frmTest.cs</DependentUpon>

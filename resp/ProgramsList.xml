@@ -31,7 +31,14 @@
       <AssemblyPath>SmartWork.UI.dll</AssemblyPath>
       <ClassName>SmartWork.UI.frmAlipayCostRepot</ClassName>
     </program>
-  
+	
+      <program>
+      <Name>RollCall</Name>
+      <ID>p04</ID>
+      <DESC>RollCall</DESC>
+      <AssemblyPath>SmartWork.UI.dll</AssemblyPath>
+      <ClassName>SmartWork.UI.frmRollCall</ClassName>
+    </program>
   
 </info>
 
